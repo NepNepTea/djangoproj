@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+{% for x in myposts %}
+<div>{{ x.title }}</div>
+<div>{{ x.description }}</div>
+<div><img src="{{ x.image.url }}" alt=""/></div>
+{% endfor %}
+
+{% else %}
+<p>You are not logged in</p>
+<p><a href="{% url 'polls:signup' %}">Регистрация</a></p>
+<p><a href="{% url 'login' %}">Войти</a></p>
+{% endif %}
+{% endblock %}
