@@ -1,0 +1,26 @@
+{% if user.is_authenticated %}
+<a href="{% url 'polls:profile'%}">профиль</a>
+<a href="{% url 'logout'%}">выйти</a>
+<a href="{% url 'polls:createquestion'%}">Создать вопрос</a>
+{% else %}
+<a href="{% url 'polls:register'%}">Создать профиль</a>
+<a href="{% url 'login'%}">Войти</a>
+{% endif %}
+<hr>
+{% if latest_question_list %}
+<ul>
+    {% for question in latest_question_list %}
+    <li style="border: 2px solid black; width: 10%; display: flex; flex-direction: column; align-items: center;">
+        <a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a>
+    {% if question.image %}    
+    <img src="{{ question.image.url }}" alt="" style="width: 120px">
+    {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>
+    Нет вопросов!
+</p>
+
+{% endif %}
