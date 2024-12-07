@@ -1,0 +1,18 @@
+{% if user.is_authenticated %}
+    <a href="{% url 'logout'%}">выйти</a>
+    {% else %}
+    <a href="{% url 'login'%}">Войти</a>
+{% endif %}
+<hr>
+{% if latest_question_list %}
+<ul>
+    {% for question in latest_question_list %}
+    <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a> </li>
+    {% endfor %}
+</ul>
+    {% else %}
+     <p>
+         Нет вопросов!
+     </p>
+
+{% endif %}
