@@ -11,7 +11,11 @@
     <h3>{{ name }}</h3>
     <p>{{ email }}</p>
 </div>
-<a href="{% url 'polls:changeimg' avatar.id %}">Поменять изображение профиля</a>
+{% if avatar.username == 'default' %}
+    <a href="{% url 'polls:addavatar' %}">Добавить изображение профиля</a>
+{% else %}
+    <a href="{% url 'polls:changeimg' avatar.id %}">Поменять изображение профиля</a>
+{% endif %}
 <a href="{% url 'polls:deleteuser' user.id %}">Удалить профиль</a>
 </body>
 </html>
