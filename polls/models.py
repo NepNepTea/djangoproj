@@ -9,6 +9,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     image = models.ImageField(upload_to="uploads/", null=True, blank=True)
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    exp_date = models.DateTimeField(null=True, blank=True)
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
