@@ -5,8 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from .forms import QuestionForm, UserForm, AvatarForm, ChoiceForm
 from django.contrib.auth import authenticate, login
-import datetime
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.views.generic.edit import DeleteView
@@ -20,7 +19,7 @@ class IndexView(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
-        context['today'] = datetime.date.today()
+        context['today'] = datetime.now()
         return context
 
 
@@ -90,11 +89,13 @@ def create_question_view(request):
         form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
             question_text = form.cleaned_data.get("question_text")
+            description = form.cleaned_data.get("description")
+            short_description = form.cleaned_data.get("short_description")
             image = form.cleaned_data.get("image")
-            pub_date = datetime.date.today()
+            pub_date = datetime.now()
             exp_date = pub_date + timedelta(days=10)
             author = request.user
-            obj = Question.objects.create(image = image, question_text = question_text, pub_date = pub_date, exp_date = exp_date, author = author)
+            obj = Question.objects.create(image = image, description=description, short_description=short_description, question_text = question_text, pub_date = pub_date, exp_date = exp_date, author = author)
             obj.save()
             return redirect('polls:index')
         else:

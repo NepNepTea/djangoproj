@@ -10,11 +10,14 @@
 {% if latest_question_list %}
 <ul>
     {% for question in latest_question_list %}
-    {% if question.exp_date <= today or user.is_staff %}
+    <p>{{ question.exp_date }} до какого числа виден</p>
+    <p>{{ today }} сейчас</p>
+    {% if today < question.exp_date or user.is_staff %}
         <li style="border: 2px solid black; width: 10%; display: flex; flex-direction: column; align-items: center;">
             <a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a>
         {% if question.image %}
-        <img src="{{ question.image.url }}" alt="" style="width: 120px">
+            <img src="{{ question.image.url }}" alt="" style="width: 120px">
+            <p>{{ question.short_description }}</p>
         {% endif %}
             <p>{{question.pub_date}}</p>
         </li>
